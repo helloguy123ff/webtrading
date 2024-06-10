@@ -1,0 +1,27 @@
+<?php
+// Processar página de registro
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = $_POST['username'];
+    $email = $_POST['email'];
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+
+    if (!userExists($username)) {
+        registerUser($username, $email, $password);
+        echo "Usuário registrado com sucesso!";
+    } else {
+        echo "O nome de usuário já está em uso!";
+    }
+}
+
+// Processar página de login
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    if (loginUser($username, $password)) {
+        echo "Login bem sucedido!";
+    } else {
+        echo "Nome de usuário ou senha incorretos!";
+    }
+}
+?>
